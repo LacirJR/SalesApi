@@ -19,13 +19,7 @@ public sealed class User : BaseEntity
 
     private User(){}
 
-    public static User Create(string email, string username, string password, Name name, Address address, string phone, UserRole role)
-    {
-        var user = new User(email, username, password, name, address, phone, role);
-        return user;
-    }
-    
-    public User(string email, string username, string password, Name name, Address address, string phone, UserRole role)
+    public User(string email, string username, string password, Name name, Address address, string phone, UserRole role, UserStatus status)
     {
         Id = Guid.NewGuid();
         Email = email;
@@ -35,26 +29,31 @@ public sealed class User : BaseEntity
         Address = address;
         Phone = phone;
         Role = role;
-    }
-
-    public void ChangeAddress(Address newAddress)
-    {
-        if(newAddress == null)
-            throw new ArgumentException("Address cannot be null");
-        Address = newAddress;
+        Status = Status;
     }
     
-    public void Deactivate()
+    public static User Create(string email, string username, string password, Name name, Address address, string phone, UserRole role, UserStatus status)
     {
-        Status = UserStatus.Inactive;
+        var user = new User(email, username, password, name, address, phone, role, status);
+        return user;
+    }
+
+
+
+    public void Update(string email, string username, string password, Name name, Address address, string phone, UserRole role, UserStatus status)
+    {
+        Email = email;
+        Username = username;
+        Password = password;
+        Name = name;
+        Address = address;
+        Phone = phone;
+        Role = role;
+        Status = status;
+        
+        if(password != Password)
+            Password = PasswordHash.Create(password).Value;
     }
     
-    public void ChangePassword(string newPasswordHash)
-    {
-        if (string.IsNullOrEmpty(newPasswordHash))
-            throw new ArgumentException("Password cannot be empty");
-
-        Password = newPasswordHash;
-    }
     
 }

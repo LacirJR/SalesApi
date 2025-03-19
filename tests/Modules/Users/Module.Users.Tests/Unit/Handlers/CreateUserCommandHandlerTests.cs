@@ -1,9 +1,11 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using FluentValidation.Results;
 using Module.Users.Application.Commands.CreateUserCommand;
 using Module.Users.Application.Dtos;
 using Module.Users.Application.Interfaces.Persistence;
 using Module.Users.Application.Interfaces.Services;
+using Module.Users.Application.Mappings;
 using Module.Users.Domain.Entities;
 using Module.Users.Tests.Unit.Fakes;
 using NSubstitute;
@@ -17,6 +19,7 @@ public class CreateUserCommandHandlerTests
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<CreateUserCommand> _validator;
+    private readonly IMapper _mapper;
     private readonly CreateUserCommandHandler _handler;
 
     public CreateUserCommandHandlerTests()
@@ -24,8 +27,9 @@ public class CreateUserCommandHandlerTests
         _userRepository = Substitute.For<IUserRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
         _validator = Substitute.For<IValidator<CreateUserCommand>>();
-
-        _handler = new CreateUserCommandHandler(_userRepository, _unitOfWork, _validator);
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<UserProfile>());
+        _mapper = config.CreateMapper();
+        _handler = new CreateUserCommandHandler(_userRepository, _unitOfWork, _validator,  _mapper);
     }
 
     [Fact]
@@ -34,7 +38,7 @@ public class CreateUserCommandHandlerTests
         var command = new CreateUserCommand(
             "invalid-email", "testuser", "123",
             new NameDto("Test", "User"),
-            new AddressDto("City", "Street", 1, "123456", new GeolocationDto(0, 0)),
+            new AddressDto("City", "Street", 1, "123456", new GeolocationDto("0", "0")),
             "999888777", "Active", "Admin"
         );
 
@@ -55,14 +59,13 @@ public class CreateUserCommandHandlerTests
         var command = new CreateUserCommand(
             "test@example.com", "testuser", "123",
             new NameDto("Test", "User"),
-            new AddressDto("City", "Street", 1, "123456", new GeolocationDto(0, 0)),
+            new AddressDto("City", "Street", 1, "123456", new GeolocationDto("0", "0")),
             "999888777", "Active", "InvalidRole"
         );
 
         _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
             .Returns(new ValidationResult());
 
-        // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         Assert.False(result.Succeeded);
@@ -76,7 +79,7 @@ public class CreateUserCommandHandlerTests
         var command = new CreateUserCommand(
             "test@example.com", "testuser", "admin123",
             new NameDto("Test", "User"),
-            new AddressDto("City", "Street", 1, "123456", new GeolocationDto(0, 0)),
+            new AddressDto("City", "Street", 1, "123456", new GeolocationDto("0", "0")),
             "999888777", "InvalidStatus", "Admin"
         );
 
@@ -96,7 +99,7 @@ public class CreateUserCommandHandlerTests
         var command = new CreateUserCommand(
             "test@example.com", "testuser", "admin123",
             new NameDto("Test", "User"),
-            new AddressDto("City", "Street", 1, "123456", new GeolocationDto(0, 0)),
+            new AddressDto("City", "Street", 1, "123456", new GeolocationDto("0", "0")),
             "999888777", "Active", "Admin"
         );
 
@@ -107,11 +110,17 @@ public class CreateUserCommandHandlerTests
             .Returns(Task.CompletedTask);
 
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>())
-            .Returns(1);
+            .Returns(Task.FromResult(1));
 
         var result = await _handler.Handle(command, CancellationToken.None);
 
         Assert.True(result.Succeeded);
-        Assert.NotEqual(Guid.Empty, result.Data);
+        Assert.NotNull(result.Data);
+        Assert.NotEqual(Guid.Empty, result.Data.Id);
+        Assert.Equal(command.Email, result.Data.Email);
+        Assert.Equal(command.Username, result.Data.Username);
+        Assert.Equal(command.Phone, result.Data.Phone);
+        Assert.Equal(command.Status, result.Data.Status);
+        Assert.Equal(command.Role, result.Data.Role);
     }
 }

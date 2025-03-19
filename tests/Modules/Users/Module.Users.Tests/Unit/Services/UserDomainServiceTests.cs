@@ -1,6 +1,7 @@
 ﻿using Module.Users.Application.Interfaces.Persistence;
 using Module.Users.Application.Services;
 using Module.Users.Domain.Entities;
+using Module.Users.Domain.Enums;
 using Module.Users.Domain.ValueObjects;
 using NSubstitute;
 using Shared.Domain.Common.Enums;
@@ -25,7 +26,7 @@ public class UserDomainServiceTests
         var email = "test@example.com";
         _userRepository.GetByEmailAsync(email, Arg.Any<CancellationToken>())
             .Returns(new User(email, "username", "password", new Name("John", "Doe"), null!, "123456789",
-                UserRole.Customer));
+                UserRole.Customer, UserStatus.Active));
 
         var result = await _userDomainService.ValidateEmailIsUniqueAsync(email, CancellationToken.None);
 

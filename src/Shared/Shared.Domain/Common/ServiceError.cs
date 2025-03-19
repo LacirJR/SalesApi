@@ -39,6 +39,13 @@ public class ServiceError
     /// </summary>
     public string Type { get; }
 
+    
+    /// <summary>
+    /// Default error for when the requested resource is not found.
+    /// </summary>
+    public static ServiceError NotFound => new("NotFound", "Resource not found",
+        "The requested resource was not found.");
+    
     /// <summary>
     /// Default error for when we receive an exception
     /// </summary>

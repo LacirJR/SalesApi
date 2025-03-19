@@ -13,10 +13,9 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddUsersApplication(this IServiceCollection services, IConfiguration config)
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
         services.AddScoped<IUserDomainService, UserDomainService>();
-
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     }
 }

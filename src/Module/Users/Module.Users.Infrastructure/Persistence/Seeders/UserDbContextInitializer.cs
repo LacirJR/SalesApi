@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Module.Users.Domain.Entities;
+using Module.Users.Domain.Enums;
 using Module.Users.Domain.ValueObjects;
 using Shared.Domain.Common.Enums;
 
@@ -37,8 +38,8 @@ public class UserDbContextInitializer
     public async Task TrySeedAddDefaultUserAsync()
     {
         var user = new User("test@email.com", "test", "admin123@", new Name("Test", "Admin"),
-            new Address("test city", "street test", 1, "0000000", new Geolocation(90,90)),
-            "33333333333", UserRole.Admin);
+            new Address("test city", "street test", 1, "0000000", new Geolocation("90","90")),
+            "33333333333", UserRole.Admin, UserStatus.Active);
         user.Id = Guid.Parse("d6116266-fee9-4137-8923-9b9c8dba7859");
         
         var existingUser = await _context.Users.FindAsync(user.Id);

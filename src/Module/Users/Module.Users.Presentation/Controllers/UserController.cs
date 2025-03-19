@@ -19,6 +19,11 @@ public class UserController : ControllerBase
         _sender = sender;
     }
 
+ /// <summary>
+ /// Add a new user
+ /// </summary>
+ /// <param name="command">Dados novo usuário</param>
+ /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
     {

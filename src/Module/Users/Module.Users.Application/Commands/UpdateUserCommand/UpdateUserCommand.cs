@@ -1,12 +1,11 @@
 ﻿using MediatR;
 using Module.Users.Application.Dtos;
-using Module.Users.Domain.Enums;
 using Shared.Domain.Common;
-using Shared.Domain.Common.Enums;
 
-namespace Module.Users.Application.Commands.CreateUserCommand;
+namespace Module.Users.Application.Commands.UpdateUserCommand;
 
-public record CreateUserCommand(string Email,
+public record UpdateUserCommand(Guid Id,
+    string Email,
     string Username,
     string Password,
     NameDto Name,

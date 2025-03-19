@@ -18,6 +18,18 @@ public class UserRepository : IUserRepository
     {
         await _context.Users.AddAsync(user, cancellationToken);
     }
+    
+    public void Update(User user)
+    {
+        var existingUser = _context.Users.Local.FirstOrDefault(u => u.Id == user.Id);
+    
+        if (existingUser is null)
+        {
+            _context.Users.Attach(user);
+        }
+    
+        _context.Users.Update(user);
+    }
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
