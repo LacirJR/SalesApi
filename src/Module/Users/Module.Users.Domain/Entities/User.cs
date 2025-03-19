@@ -44,7 +44,6 @@ public sealed class User : BaseEntity
     {
         Email = email;
         Username = username;
-        Password = password;
         Name = name;
         Address = address;
         Phone = phone;
