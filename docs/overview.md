@@ -1,4 +1,4 @@
-[Back to README](../README.md)
+[Back to README](/README.md)
 
 ## Overview
 This project serves as an evaluation for senior developer candidates. It is designed to assess various skills and competencies required for a senior developer role, including but not limited to:
@@ -31,6 +31,6 @@ This comprehensive evaluation aims to assess both the technical proficiency and 
 
 <br/>
 <div style="display: flex; justify-content: space-between;">
-  <a href="../README.md">Previous: Read Me</a>
-  <a href="./tech-stack.md">Next: Tech Stack</a>
+  <a href="/README.md">Previous: Read Me</a>
+  <a href="/tech-stack.md">Next: Tech Stack</a>
 </div>

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.13\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.13\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Gridify" Version="2.16.2" />
+      <PackageReference Include="Gridify.EntityFramework" Version="2.16.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.Application\Shared.Application.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\Module.Users.Application\Module.Users.Application.csproj" />
+      <ProjectReference Include="..\Module.Users.Domain\Module.Users.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
