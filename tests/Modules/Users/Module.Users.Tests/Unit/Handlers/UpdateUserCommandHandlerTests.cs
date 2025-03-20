@@ -67,7 +67,7 @@ public class UpdateUserCommandHandlerTests
         _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
             .Returns(new ValidationResult());
         
-        _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(Task.FromResult<User?>(null));
 
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -95,7 +95,7 @@ public class UpdateUserCommandHandlerTests
         _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
             .Returns(new ValidationResult());
         
-        _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(Task.FromResult<User?>(user));
 
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -126,7 +126,7 @@ public class UpdateUserCommandHandlerTests
         _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
             .Returns(new ValidationResult());
         
-        _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(Task.FromResult<User?>(user));
 
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -157,7 +157,7 @@ public class UpdateUserCommandHandlerTests
         _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
             .Returns(new ValidationResult());
         
-        _userRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(Task.FromResult<User?>(user));
 
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>())

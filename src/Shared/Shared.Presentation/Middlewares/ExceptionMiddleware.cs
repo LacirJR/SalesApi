@@ -2,10 +2,12 @@
 using System.Text.Json;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
 using Module.Users.Domain.Exceptions;
+using Shared.Application.Exceptions;
 using Shared.Domain.Common;
 
-namespace Api.Middlewares;
+namespace Shared.Presentation.Middlewares;
 
 public class ExceptionMiddleware
 {
@@ -38,6 +40,11 @@ public class ExceptionMiddleware
 
         switch (exception)
         {
+            case ServiceResultException sr:
+                statusCode = StatusCodes.Status400BadRequest;
+                errorResponse = sr.ServiceError;
+                break;
+            
             case ValidationException ve:
                 statusCode = (int)HttpStatusCode.BadRequest;
                 errorResponse = ServiceError.ModelStateError(FormatValidationErrors(ve.Errors));

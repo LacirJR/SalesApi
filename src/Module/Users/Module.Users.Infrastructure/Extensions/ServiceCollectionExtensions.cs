@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Module.Users.Application.Interfaces;
 using Module.Users.Application.Interfaces.Persistence;
+using Module.Users.Infrastructure.Authentication;
 using Module.Users.Infrastructure.Persistence;
 using Module.Users.Infrastructure.Persistence.Repositories;
 using Module.Users.Infrastructure.Persistence.Seeders;
@@ -21,8 +23,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<UserDbContextInitializer>();
         
         services.AddScoped<IUnitOfWork, UnitOfWork<UserDbContext>>();
-
-
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IUserRepository, UserRepository>();
         
         return services;

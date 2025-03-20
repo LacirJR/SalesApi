@@ -34,7 +34,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Servi
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (user is null)
             return ServiceResult.Failed<UserResponseDto>(ServiceError.NotFound);

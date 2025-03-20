@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Module.Users.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250318145101_Initial")]
+    [Migration("20250319192747_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -77,12 +77,15 @@ namespace Module.Users.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users", "Users");
                 });
 
             modelBuilder.Entity("Module.Users.Domain.Entities.User", b =>
                 {
-                    b.OwnsOne("Module.Users.Domain.Entities.Address", "Address", b1 =>
+                    b.OwnsOne("Module.Users.Domain.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid");
@@ -112,7 +115,7 @@ namespace Module.Users.Infrastructure.Persistence.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
 
-                            b1.OwnsOne("Module.Users.Domain.Entities.Geolocation", "Geolocation", b2 =>
+                            b1.OwnsOne("Module.Users.Domain.ValueObjects.Geolocation", "Geolocation", b2 =>
                                 {
                                     b2.Property<Guid>("AddressUserId")
                                         .HasColumnType("uuid");
@@ -139,7 +142,7 @@ namespace Module.Users.Infrastructure.Persistence.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("Module.Users.Domain.Entities.Name", "Name", b1 =>
+                    b.OwnsOne("Module.Users.Domain.ValueObjects.Name", "Name", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid");

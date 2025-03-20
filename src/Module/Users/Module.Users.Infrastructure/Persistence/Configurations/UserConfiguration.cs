@@ -10,6 +10,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(x => x.Id);
         
+        builder.HasIndex(x => x.Email).IsUnique();
+        
         builder.OwnsOne(x => x.Name, name =>
         {
             name.Property(n => n.Firstname).HasMaxLength(50);

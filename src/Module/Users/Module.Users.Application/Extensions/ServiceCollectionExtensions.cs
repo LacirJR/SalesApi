@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Module.Users.Application.Interfaces;
 using Module.Users.Application.Interfaces.Services;
 using Module.Users.Application.Services;
 

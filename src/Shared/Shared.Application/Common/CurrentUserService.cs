@@ -29,6 +29,5 @@ public class CurrentUserService : ICurrentUserService
         return claim != null
             ? Guid.Parse(claim.Value)
             : throw new UnauthorizedAccessException("User ID not found in claims.");
-        ;
     }
 }

@@ -92,4 +92,92 @@ public class UserRepositoryTests
         Assert.Equal("newExistingUser", updatedUser.Username);
         Assert.Equal("Updated", updatedUser.Name.Firstname);
     }
+    
+    [Fact]
+    public async Task RemoveByIdAsync_Should_Remove_User_When_Exists()
+    {
+        var user = new User("remove@example.com", "removeUser", "ValidPassword123",
+            new Name("Remove", "User"),
+            new Address("City", "Street", 10, "12345678", new Geolocation("12.34", "56.78")),
+            "999888777", UserRole.Admin, UserStatus.Active);
+
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync(default);
+
+        var removedUser = await _repository.RemoveByIdAsync(user.Id, CancellationToken.None);
+        await _context.SaveChangesAsync(default);
+
+        var userInDb = await _context.Users.FindAsync(user.Id);
+        Assert.Null(userInDb);
+        Assert.NotNull(removedUser);
+        Assert.Equal(user.Email, removedUser.Email);
+    }
+    
+    [Fact]
+    public async Task RemoveByIdAsync_Should_Return_Null_When_User_Not_Found()
+    {
+        var removedUser = await _repository.RemoveByIdAsync(Guid.NewGuid(), CancellationToken.None);
+
+        Assert.Null(removedUser);
+    }
+    
+    [Fact]
+    public async Task GetByIdAsync_Should_Return_User_When_Exists()
+    {
+        var user = new User("findbyid@example.com", "findUser", "ValidPassword123",
+            new Name("Find", "User"),
+            new Address("City", "Street", 10, "12345678", new Geolocation("12.34", "56.78")),
+            "999888777", UserRole.Admin, UserStatus.Active);
+
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync(default);
+
+        var result = await _repository.GetByIdAsync(user.Id, CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.Equal(user.Id, result.Id);
+    }
+    
+    [Fact]
+    public async Task GetByIdAsync_Should_Return_Null_When_User_Not_Found()
+    {
+        var result = await _repository.GetByIdAsync(Guid.NewGuid(), CancellationToken.None);
+        Assert.Null(result);
+    }
+    
+    [Fact]
+    public async Task GetAllAsync_Should_Return_Paginated_Users()
+    {
+        var users = new List<User>
+        {
+            new User("user1@example.com", "user1", "ValidPassword123",
+                new Name("User1", "Test"), new Address("City1", "Street1", 1, "12345", new Geolocation("12.34", "56.78")),
+                "999888777", UserRole.Admin, UserStatus.Active),
+
+            new User("user2@example.com", "user2", "ValidPassword123",
+                new Name("User2", "Test"), new Address("City2", "Street2", 2, "54321", new Geolocation("13.34", "57.78")),
+                "888777666", UserRole.Customer, UserStatus.Active)
+        };
+
+        await _context.Users.AddRangeAsync(users);
+        await _context.SaveChangesAsync(default);
+
+        var result = await _repository.GetAllAsync(null, "Username", 1, 10, CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.Equal(2, result.TotalCount);
+        Assert.Equal(2, result.Data.ToList().Count);
+        Assert.Equal("user1@example.com", result.Data.ToList()[0].Email);
+        Assert.Equal("user2@example.com", result.Data.ToList()[1].Email);
+    }
+    
+    [Fact]
+    public async Task GetAllAsync_Should_Return_EmptyList_When_No_Users()
+    {
+        var result = await _repository.GetAllAsync(null, "Username", 1, 10, CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.Empty(result.Data);
+        Assert.Equal(0, result.TotalCount);
+    }
 }

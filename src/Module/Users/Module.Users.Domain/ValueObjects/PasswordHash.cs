@@ -18,8 +18,8 @@ public sealed class PasswordHash
         return new PasswordHash(hash);
     }
 
-    public bool Verify(string password)
+    public static bool Verify(string password, string hash)
     {
-        return BCrypt.Net.BCrypt.Verify(password, Value);
+        return BCrypt.Net.BCrypt.Verify(password, hash);
     }
 }

@@ -53,6 +53,10 @@ public sealed class User : BaseEntity
         if(password != Password)
             Password = PasswordHash.Create(password).Value;
     }
-    
+
+    public bool VerifyPassword(string password)
+    {
+        return PasswordHash.Verify(password, Password);
+    }
     
 }
