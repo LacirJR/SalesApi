@@ -7,8 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Extensions\" />
-      <Folder Include="Persistence\" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\Module.Products.Application\Module.Products.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Gridify" Version="2.16.2" />
+      <PackageReference Include="Gridify.EntityFramework" Version="2.16.2" />
     </ItemGroup>
 
 </Project>

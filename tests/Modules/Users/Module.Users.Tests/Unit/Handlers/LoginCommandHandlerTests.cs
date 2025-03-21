@@ -1,6 +1,7 @@
 ﻿using Module.Users.Application.Commands.Auth.LoginCommand;
 using Module.Users.Application.Dtos;
 using Module.Users.Application.Interfaces;
+using Module.Users.Application.Interfaces.Authentication;
 using Module.Users.Application.Interfaces.Persistence;
 using Module.Users.Domain.Entities;
 using NSubstitute;

@@ -21,7 +21,7 @@ public class UserDomainServiceTests
     }
 
     [Fact]
-    public async Task EmailExistsAsync_ShouldReturnTrue_WhenEmailAlreadyExists()
+    public async Task EmailExistsAsync_ShouldReturnFalse_WhenEmailAlreadyExists()
     {
         var email = "test@example.com";
         _userRepository.GetByEmailAsync(email, Arg.Any<CancellationToken>())
@@ -30,11 +30,11 @@ public class UserDomainServiceTests
 
         var result = await _userDomainService.ValidateEmailIsUniqueAsync(email, CancellationToken.None);
 
-        Assert.True(result);
+        Assert.False(result);
     }
 
     [Fact]
-    public async Task EmailExistsAsync_ShouldReturnFalse_WhenEmailDoesNotExist()
+    public async Task EmailExistsAsync_ShouldReturnTrue_WhenEmailDoesNotExist()
     {
         var email = "notfound@example.com";
         _userRepository.GetByEmailAsync(email, Arg.Any<CancellationToken>())
@@ -42,6 +42,6 @@ public class UserDomainServiceTests
 
         var result = await _userDomainService.ValidateEmailIsUniqueAsync(email, CancellationToken.None);
 
-        Assert.False(result);
+        Assert.True(result);
     }
 }

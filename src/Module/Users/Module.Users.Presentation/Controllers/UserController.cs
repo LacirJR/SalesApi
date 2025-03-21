@@ -49,7 +49,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ServiceError), 400)]
     [ProducesResponseType(typeof(ServiceError), 500)]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById([FromQuery] Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var response = await _sender.Send(new GetUserByIdQuery(id));
         if (response.Succeeded)
@@ -101,9 +101,9 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ServiceError), 400)]
     [ProducesResponseType(typeof(ServiceError), 500)]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Update([FromQuery] DeleteUserCommand command)
+    public async Task<IActionResult> Update(Guid id)
     {
-        var response = await _sender.Send(command);
+        var response = await _sender.Send(new DeleteUserCommand(id));
 
         if (response.Succeeded)
             return Ok(response);

@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Module.Products.Presentation.Extensions;
 using Module.Users.Extensions;
 using Module.Users.Infrastructure.Persistence.Seeders;
 using Shared.Infrastructure.Extensions;
@@ -79,7 +80,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddSharedInfrastructure(builder.Configuration);
-builder.Services.AddUserModule(builder.Configuration);
+
+builder.Services.AddUserModule(builder.Configuration)
+    .AddProductModule(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 var app = builder.Build();

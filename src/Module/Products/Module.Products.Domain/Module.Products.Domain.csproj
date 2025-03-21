@@ -7,10 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Entities\" />
       <Folder Include="Enums\" />
-      <Folder Include="Exceptions\" />
-      <Folder Include="ValueObjects\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.3" />
     </ItemGroup>
 
 </Project>

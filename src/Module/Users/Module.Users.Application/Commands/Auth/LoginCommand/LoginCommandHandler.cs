@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Module.Users.Application.Dtos;
 using Module.Users.Application.Interfaces;
+using Module.Users.Application.Interfaces.Authentication;
 using Module.Users.Application.Interfaces.Persistence;
 using Shared.Domain.Common;
 

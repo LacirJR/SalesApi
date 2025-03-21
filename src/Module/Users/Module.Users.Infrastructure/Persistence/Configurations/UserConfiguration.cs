@@ -8,26 +8,30 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.Ignore(e => e.DomainEvents);
+        
         builder.HasKey(x => x.Id);
         
         builder.HasIndex(x => x.Email).IsUnique();
         
+        
         builder.OwnsOne(x => x.Name, name =>
         {
-            name.Property(n => n.Firstname).HasMaxLength(50);
-            name.Property(n => n.Lastname).HasMaxLength(50);
+            name.Property(n => n.Firstname).HasColumnName("Firstname").HasMaxLength(50);
+            name.Property(n => n.Lastname).HasColumnName("Lastname").HasMaxLength(50);
         });
         
         builder.OwnsOne(u => u.Address, address =>
         {
-            address.Property(a => a.City).HasMaxLength(100);
-            address.Property(a => a.Street).HasMaxLength(100);
-            address.Property(a => a.Zipcode).HasMaxLength(20);
+            address.Property(a => a.City).HasColumnName("City").HasMaxLength(100);
+            address.Property(a => a.Street).HasColumnName("Street").HasMaxLength(100);
+            address.Property(a => a.Zipcode).HasColumnName("Zipcode").HasMaxLength(20);
+            address.Property(a => a.Number).HasColumnName("Number").HasMaxLength(20);
 
             address.OwnsOne(a => a.Geolocation, geo =>
             {
-                geo.Property(g => g.Lat).HasMaxLength(20);
-                geo.Property(g => g.Long).HasMaxLength(20);
+                geo.Property(g => g.Lat).HasColumnName("Lat").HasMaxLength(20);
+                geo.Property(g => g.Long).HasColumnName("Long").HasMaxLength(20);
             });
         });
         

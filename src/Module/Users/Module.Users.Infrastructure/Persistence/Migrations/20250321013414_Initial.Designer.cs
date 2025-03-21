@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Module.Users.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250319192747_Initial")]
+    [Migration("20250321013414_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -93,20 +93,25 @@ namespace Module.Users.Infrastructure.Persistence.Migrations
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasMaxLength(100)
-                                .HasColumnType("character varying(100)");
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("City");
 
                             b1.Property<int>("Number")
-                                .HasColumnType("integer");
+                                .HasMaxLength(20)
+                                .HasColumnType("integer")
+                                .HasColumnName("Number");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
                                 .HasMaxLength(100)
-                                .HasColumnType("character varying(100)");
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("Street");
 
                             b1.Property<string>("Zipcode")
                                 .IsRequired()
                                 .HasMaxLength(20)
-                                .HasColumnType("character varying(20)");
+                                .HasColumnType("character varying(20)")
+                                .HasColumnName("Zipcode");
 
                             b1.HasKey("UserId");
 
@@ -123,12 +128,14 @@ namespace Module.Users.Infrastructure.Persistence.Migrations
                                     b2.Property<string>("Lat")
                                         .IsRequired()
                                         .HasMaxLength(20)
-                                        .HasColumnType("character varying(20)");
+                                        .HasColumnType("character varying(20)")
+                                        .HasColumnName("Lat");
 
                                     b2.Property<string>("Long")
                                         .IsRequired()
                                         .HasMaxLength(20)
-                                        .HasColumnType("character varying(20)");
+                                        .HasColumnType("character varying(20)")
+                                        .HasColumnName("Long");
 
                                     b2.HasKey("AddressUserId");
 
@@ -150,12 +157,14 @@ namespace Module.Users.Infrastructure.Persistence.Migrations
                             b1.Property<string>("Firstname")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
+                                .HasColumnType("character varying(50)")
+                                .HasColumnName("Firstname");
 
                             b1.Property<string>("Lastname")
                                 .IsRequired()
                                 .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
+                                .HasColumnType("character varying(50)")
+                                .HasColumnName("Lastname");
 
                             b1.HasKey("UserId");
 

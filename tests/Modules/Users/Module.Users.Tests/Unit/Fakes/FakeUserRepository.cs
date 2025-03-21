@@ -1,4 +1,5 @@
-﻿using Module.Users.Application.Interfaces.Persistence;
+﻿using Bogus;
+using Module.Users.Application.Interfaces.Persistence;
 using Module.Users.Domain.Entities;
 using Module.Users.Domain.Enums;
 using Module.Users.Domain.ValueObjects;
@@ -9,11 +10,34 @@ namespace Module.Users.Tests.Unit.Fakes;
 
 public class FakeUserRepository : IUserRepository
 {
-    private readonly List<User> _users = new()
+    private readonly List<User> _users;
+
+    public FakeUserRepository()
     {
-        new User("existing@email.com", "existingUser", "hashedPassword", 
-            new Name("John", "Doe"), null, "123456789", UserRole.Customer, UserStatus.Active)
-    };
+        var faker = new Faker();
+        _users = new List<User>
+        {
+            new User("existing@email.com", "existingUser", "hashedPassword", 
+                new Name("John", "Doe"), null, "123456789", UserRole.Customer, UserStatus.Active),
+            
+            User.Create(
+                faker.Internet.Email(),
+                faker.Internet.UserName(),
+                faker.Internet.Password(),
+                new Name(faker.Name.FirstName(), faker.Name.LastName()),
+                new Address(
+                    faker.Address.City(),
+                    faker.Address.StreetName(),
+                    faker.Random.Int(1, 9999),
+                    faker.Address.ZipCode(),
+                    new Geolocation(faker.Address.Latitude().ToString(), faker.Address.Longitude().ToString())
+                ),
+                faker.Phone.PhoneNumber(),
+                faker.PickRandom<UserRole>(),
+                faker.PickRandom<UserStatus>()
+            )
+        };
+    }
 
     public void Update(User user)
     {
@@ -32,7 +56,6 @@ public class FakeUserRepository : IUserRepository
         {
             _users.Remove(user);
         }
-
         return Task.FromResult(user);
     }
 
@@ -44,7 +67,6 @@ public class FakeUserRepository : IUserRepository
     public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return Task.FromResult(_users.FirstOrDefault(u => u.Id == id));
-
     }
 
     public Task<PaginatedList<User>> GetAllAsync(string? filter, string? orderBy, int page, int size, CancellationToken cancellationToken)
