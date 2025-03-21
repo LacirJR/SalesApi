@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
+      <Folder Include="Exceptions\" />
+      <Folder Include="ValueObjects\" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.3" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
     </ItemGroup>
 
 </Project>

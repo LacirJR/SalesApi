@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Module.Carts.Presentation.Extensions;
 using Module.Products.Presentation.Extensions;
 using Module.Users.Extensions;
 using Module.Users.Infrastructure.Persistence.Seeders;
@@ -82,7 +83,8 @@ builder.Services.AddAuthorization();
 builder.Services.AddSharedInfrastructure(builder.Configuration);
 
 builder.Services.AddUserModule(builder.Configuration)
-    .AddProductModule(builder.Configuration);
+    .AddProductModule(builder.Configuration)
+    .AddCartModule(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 var app = builder.Build();
