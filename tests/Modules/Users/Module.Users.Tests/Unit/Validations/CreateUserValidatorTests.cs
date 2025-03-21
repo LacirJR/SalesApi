@@ -33,7 +33,7 @@ public class CreateUserValidatorTests
     [Fact]
     public async Task Should_Have_Error_When_Email_Already_Exists()
     {
-        var command = new CreateUserCommand("existing@email.com", "test", "123", new NameDto("test", "jr"),
+        var command = new CreateUserCommand("existing@email.com", "test", "admin123@", new NameDto("test", "jr"),
             new AddressDto("test", "test", 1, "0000000", new GeolocationDto("12", "12")), "321123321", "Active", "Admin");
 
         var result = await _validator.TestValidateAsync(command);

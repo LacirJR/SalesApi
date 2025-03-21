@@ -50,6 +50,6 @@ public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
 
     private async Task<bool> EmailMustBeUnique(string email, CancellationToken cancellationToken)
     {
-        return !await _userDomainService.ValidateEmailIsUniqueAsync(email, cancellationToken);
+        return await _userDomainService.ValidateEmailIsUniqueAsync(email, cancellationToken);
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Module.Users.Application.Dtos;
 using Module.Users.Application.Interfaces;
+using Module.Users.Application.Interfaces.Authentication;
 using Module.Users.Domain.Entities;
 
 namespace Module.Users.Infrastructure.Authentication;

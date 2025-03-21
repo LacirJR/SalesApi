@@ -46,6 +46,7 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
     
     private async Task<bool> EmailMustBeUnique(string email, CancellationToken cancellationToken)
     {
-        return !await _userDomainService.ValidateEmailIsUniqueAsync(email, cancellationToken);
+        var emailExists = await _userDomainService.ValidateEmailIsUniqueAsync(email, cancellationToken);
+        return emailExists;
     }
 }

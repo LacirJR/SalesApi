@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Module.Users.Application.Interfaces;
+using Module.Users.Application.Interfaces.Authentication;
 using Module.Users.Application.Interfaces.Persistence;
 using Module.Users.Infrastructure.Authentication;
 using Module.Users.Infrastructure.Persistence;

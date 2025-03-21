@@ -18,6 +18,6 @@ public class UserDomainService :  IUserDomainService
     {
         var existingUser = await _userRepository.GetByEmailAsync(email, cancellationToken);
         
-        return existingUser is not null;
+        return existingUser is null;
     }
 }
