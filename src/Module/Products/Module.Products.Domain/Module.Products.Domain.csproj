@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Enums\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
     </ItemGroup>
 

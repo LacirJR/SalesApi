@@ -26,6 +26,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork<UserDbContext>>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ISharedUserRepository, SharedUserRepository>();
         
         return services;
     }

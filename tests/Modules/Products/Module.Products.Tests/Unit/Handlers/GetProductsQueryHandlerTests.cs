@@ -65,7 +65,7 @@ public class GetProductsQueryHandlerTests
 
         Assert.True(result.Succeeded);
         Assert.Equal(productsDto.Count, result.Data.Data.ToList().Count);
-        Assert.Equal(query.Page, result.Data.PageNumber);
+        Assert.Equal(query.Page, result.Data.CurrentPage);
 
         await _productRepository.Received(1).GetAllAsync(query.Filter, query.OrderBy, query.Page, query.Size,
             Arg.Any<CancellationToken>());

@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Module\Carts\Module.Carts.Presentation\Module.Carts.Presentation.csproj" />
       <ProjectReference Include="..\..\Module\Products\Module.Products.Presentation\Module.Products.Presentation.csproj" />
       <ProjectReference Include="..\..\Module\Users\Module.Users.Presentation\Module.Users.Presentation.csproj" />
       <ProjectReference Include="..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />

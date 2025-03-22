@@ -25,7 +25,7 @@ public class UserDbContextInitializer
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "An error occurred while seeding the database.");
+            _logger.LogError(e, "An error occurred while seeding the user database.");
             throw;
         }
     }
@@ -37,11 +37,17 @@ public class UserDbContextInitializer
 
     public async Task TrySeedAddDefaultUserAsync()
     {
-        var user = new User("test@email.com", "test", "admin123@", new Name("Test", "Admin"),
-            new Address("test city", "street test", 1, "0000000", new Geolocation("90","90")),
-            "33333333333", UserRole.Admin, UserStatus.Active);
+        var user = new User("test@email.com",
+            "test",
+            "admin123@",
+            new Name("Test", "Admin"),
+            new Address("test city", "street test", 1, "0000000", new Geolocation("90", "90")),
+            "33333333333",
+            UserRole.Admin,
+            UserStatus.Active);
+
         user.Id = Guid.Parse("d6116266-fee9-4137-8923-9b9c8dba7859");
-        
+
         var existingUser = await _context.Users.FindAsync(user.Id);
 
         if (existingUser is null)
@@ -49,6 +55,5 @@ public class UserDbContextInitializer
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }
-
     }
 }
