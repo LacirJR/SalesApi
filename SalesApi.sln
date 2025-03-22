@@ -62,6 +62,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module.Carts.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module.Carts.Presentation", "src\Module\Carts\Module.Carts.Presentation\Module.Carts.Presentation.csproj", "{0B309F07-2DB6-4998-B028-1246335BD28B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Carts", "Carts", "{595DB987-EC85-49B7-8B4B-9BC5FBCD2620}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module.Carts.Tests", "tests\Modules\Carts\Module.Carts.Tests\Module.Carts.Tests.csproj", "{1BA190BB-FAB0-4093-A769-85809B9CAE5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +99,8 @@ Global
 		{5C27F682-0C30-40C9-8603-E8EC8DE08561} = {2B180531-1F3E-41C1-8F36-8D9679F223B8}
 		{F075A070-DFD0-4F9A-A025-6DAFBF5B4135} = {2B180531-1F3E-41C1-8F36-8D9679F223B8}
 		{0B309F07-2DB6-4998-B028-1246335BD28B} = {2B180531-1F3E-41C1-8F36-8D9679F223B8}
+		{595DB987-EC85-49B7-8B4B-9BC5FBCD2620} = {1BBC3D19-5260-4D9B-BD4B-1FA7E2C55042}
+		{1BA190BB-FAB0-4093-A769-85809B9CAE5D} = {595DB987-EC85-49B7-8B4B-9BC5FBCD2620}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{42C4341E-36FC-4F25-BA7D-B93A55E062BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -177,5 +183,9 @@ Global
 		{0B309F07-2DB6-4998-B028-1246335BD28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B309F07-2DB6-4998-B028-1246335BD28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B309F07-2DB6-4998-B028-1246335BD28B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA190BB-FAB0-4093-A769-85809B9CAE5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA190BB-FAB0-4093-A769-85809B9CAE5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA190BB-FAB0-4093-A769-85809B9CAE5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA190BB-FAB0-4093-A769-85809B9CAE5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

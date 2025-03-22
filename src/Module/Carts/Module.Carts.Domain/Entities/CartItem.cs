@@ -1,4 +1,5 @@
-﻿using Shared.Domain.Common;
+﻿using Module.Carts.Domain.Exceptions;
+using Shared.Domain.Common;
 
 namespace Module.Carts.Domain.Entities;
 
@@ -8,7 +9,7 @@ public class CartItem : BaseEntity
     public Guid ProductId { get; private set; }
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
-    public double DiscountPercentage { get; private set; }
+    public decimal DiscountPercentage { get; private set; }
     
     private CartItem() { }
 
@@ -23,15 +24,15 @@ public class CartItem : BaseEntity
     public void UpdateQuantity(int newQuantity)
     {
         if (newQuantity <= 0)
-            throw new InvalidOperationException("Quantity must be greater than zero.");
+            throw new CartDomainException("Quantity must be greater than zero.");
 
         Quantity = newQuantity;
     }
 
-    public void ApplyDiscount(double discountPercentage)
+    public void ApplyDiscount(decimal discountPercentage)
     {
         if (discountPercentage < 0 || discountPercentage > 100)
-            throw new InvalidOperationException("Discount must be between 0% and 100%.");
+            throw new CartDomainException("Discount must be between 0% and 100%.");
 
         DiscountPercentage = discountPercentage;
     }

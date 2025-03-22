@@ -7,11 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Exceptions\" />
-      <Folder Include="ValueObjects\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
     </ItemGroup>
 

@@ -3,10 +3,12 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Module.Carts.Infrastructure.Persistence.Seeders;
 using Module.Carts.Presentation.Extensions;
 using Module.Products.Presentation.Extensions;
 using Module.Users.Extensions;
 using Module.Users.Infrastructure.Persistence.Seeders;
+using Shared.Application.Extensions;
 using Shared.Infrastructure.Extensions;
 using Shared.Presentation.Middlewares;
 
@@ -81,6 +83,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddSharedInfrastructure(builder.Configuration);
+builder.Services.AddSharedApplication(builder.Configuration);
 
 builder.Services.AddUserModule(builder.Configuration)
     .AddProductModule(builder.Configuration)
@@ -98,7 +101,9 @@ if (app.Environment.IsDevelopment())
     using (var scope = app.Services.CreateScope())
     {
         var initialiserUserDbContextInitializer = scope.ServiceProvider.GetRequiredService<UserDbContextInitializer>();
+        var initialiserCartDbContextInitializer = scope.ServiceProvider.GetRequiredService<CartDbContextInitializer>();
         await initialiserUserDbContextInitializer.SeedAsync();
+        await initialiserCartDbContextInitializer.SeedAsync();
     }
 }
 
