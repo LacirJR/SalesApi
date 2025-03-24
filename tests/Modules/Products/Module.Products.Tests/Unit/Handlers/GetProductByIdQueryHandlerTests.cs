@@ -41,7 +41,7 @@ public class GetProductByIdQueryHandlerTests
 
         var command = new GetProductByIdQuery(productId);
 
-        _productRepository.GetByIdAsync(productId, Arg.Any<CancellationToken>())
+        _productRepository.GetByIdAsync(productId, default)
             .Returns(Task.FromResult(product));
 
         var expectedResponse = new ProductResponseDto
@@ -53,12 +53,12 @@ public class GetProductByIdQueryHandlerTests
         _mapper.Map<ProductResponseDto>(product)
             .Returns(expectedResponse);
 
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(command, default);
 
         Assert.True(result.Succeeded);
         Assert.Equal(product.Title, result.Data.Title);
 
-        await _productRepository.Received(1).GetByIdAsync(productId, Arg.Any<CancellationToken>());
+        await _productRepository.Received(1).GetByIdAsync(productId, default);
     }
 
     [Fact]

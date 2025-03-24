@@ -12,11 +12,11 @@ namespace Module.Products.Application.Commands.CreateCategoryCommand;
 public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ServiceResult<CategoryResponseDto>>
 {
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<CreateCategoryCommand> _validator;
     private readonly IMapper _mapper;
 
-    public CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork,
+    public CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IProductUnitOfWork unitOfWork,
         IValidator<CreateCategoryCommand> validator, IMapper mapper)
     {
         _categoryRepository = categoryRepository;

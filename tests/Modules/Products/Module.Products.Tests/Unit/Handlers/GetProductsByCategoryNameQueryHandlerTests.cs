@@ -47,7 +47,7 @@ public class GetProductsByCategoryNameQueryHandlerTests
         _categoryRepository.GetByNameAsync(categoryName, Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(category));
 
-        _productRepository.GetAllAsync($"categoryId={category.Id}", query.Order, query.Page, query.Size, Arg.Any<CancellationToken>())
+        _productRepository.GetAllAsync($"categoryId={category.Id}", query.Order, query.Page, query.Size, default)
             .Returns(Task.FromResult(paginatedProducts));
 
         var productsDto = new List<ProductResponseDto>
@@ -63,7 +63,7 @@ public class GetProductsByCategoryNameQueryHandlerTests
 
         Assert.True(result.Succeeded);
         Assert.Equal(productsDto.Count, result.Data.Data.ToList().Count);
-        Assert.Equal(query.Page, result.Data.PageNumber);
+        Assert.Equal(query.Page, result.Data.CurrentPage);
 
         await _categoryRepository.Received(1).GetByNameAsync(categoryName, Arg.Any<CancellationToken>());
         await _productRepository.Received(1).GetAllAsync($"categoryId={category.Id}", query.Order, query.Page, query.Size, Arg.Any<CancellationToken>());

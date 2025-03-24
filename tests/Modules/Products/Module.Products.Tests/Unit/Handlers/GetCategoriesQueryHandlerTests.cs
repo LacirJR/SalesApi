@@ -47,16 +47,16 @@ public class GetCategoriesQueryHandlerTests
     [Fact]
     public async Task Should_Return_Empty_List_When_No_Categories_Exist()
     {
-        _categoryRepository.GetAllAsync(Arg.Any<CancellationToken>())
+        _categoryRepository.GetAllAsync(default)
             .Returns(Task.FromResult(new List<Category>()));
 
         var query = new GetCategoriesQuery();
 
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.Handle(query, default);
 
         Assert.True(result.Succeeded);
         Assert.Empty(result.Data);
 
-        await _categoryRepository.Received(1).GetAllAsync(Arg.Any<CancellationToken>());
+        await _categoryRepository.Received(1).GetAllAsync(default);
     }
 }

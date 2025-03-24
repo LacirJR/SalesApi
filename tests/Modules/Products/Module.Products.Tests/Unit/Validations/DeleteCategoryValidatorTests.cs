@@ -28,7 +28,7 @@ public class DeleteCategoryValidatorTests
         var categoryName = _faker.Commerce.Categories(1)[0];
         var command = new DeleteCategoryCommand(categoryName);
 
-        _categoryRepository.GetByNameAsync(categoryName, Arg.Any<CancellationToken>())
+        _categoryRepository.GetByNameAsync(categoryName, default)
             .Returns(Task.FromResult(new Category(categoryName)));
 
         var result = await _validator.TestValidateAsync(command);

@@ -10,13 +10,9 @@ namespace Module.Products.Infrastructure.Persistence;
 
 public class ProductDbContext : ModuleDbContext, IProductDbContext
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     public ProductDbContext(DbContextOptions<ProductDbContext> options, IMediator mediator,
-        ICurrentUserService currentUserService,
-        IHttpContextAccessor httpContextAccessor) : base(options, mediator, currentUserService, httpContextAccessor)
+        ICurrentUserService currentUserService) : base(options, mediator, currentUserService)
     {
-        _httpContextAccessor = httpContextAccessor;
     }
 
     protected override string Schema => "Products";

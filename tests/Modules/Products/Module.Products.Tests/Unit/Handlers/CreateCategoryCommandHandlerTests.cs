@@ -18,7 +18,7 @@ namespace Module.Products.Tests.Unit.Handlers;
 public class CreateCategoryCommandHandlerTests
 {
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<CreateCategoryCommand> _validator;
     private readonly IMapper _mapper;
     private readonly CreateCategoryCommandHandler _handler;
@@ -27,7 +27,7 @@ public class CreateCategoryCommandHandlerTests
     public CreateCategoryCommandHandlerTests()
     {
         _categoryRepository = Substitute.For<ICategoryRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<IProductUnitOfWork>();
         _validator = Substitute.For<IValidator<CreateCategoryCommand>>();
         _mapper = Substitute.For<IMapper>();
 

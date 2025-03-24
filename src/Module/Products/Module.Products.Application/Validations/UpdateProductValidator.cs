@@ -33,11 +33,7 @@ public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
         RuleFor(x => x.Category)
             .NotEmpty().WithMessage("The product category is required.")
             .MustAsync(CategoryExists).WithMessage("The specified category does not exist.");
-
-        RuleFor(x => x)
-            .MustAsync(NotExistProductWithSameTitleAndCategory)
-            .WithMessage("A product with the same title already exists in this category.");
-
+        
         RuleFor(x => x.Image)
             .NotEmpty().WithMessage("The product image URL is required.")
             .Must(BeAValidUrl).WithMessage("The image URL is invalid.");
@@ -55,11 +51,5 @@ public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
     {
         return await _categoryRepository.ExistsByNameAsync(categoryName, cancellationToken);
     }
-
-    private async Task<bool> NotExistProductWithSameTitleAndCategory(UpdateProductCommand command,
-        CancellationToken cancellationToken)
-    {
-        return !await _productRepository.ExistsByTitleAndCategoryAsync(command.Title, command.Category,
-            cancellationToken);
-    }
+    
 }

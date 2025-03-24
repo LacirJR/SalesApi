@@ -21,7 +21,7 @@ public class UpdateProductCommandHandlerTests
 {
     private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<UpdateProductCommand> _validator;
     private readonly IMapper _mapper;
     private readonly UpdateProductCommandHandler _handler;
@@ -31,7 +31,7 @@ public class UpdateProductCommandHandlerTests
     {
         _productRepository = Substitute.For<IProductRepository>();
         _categoryRepository = Substitute.For<ICategoryRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<IProductUnitOfWork>();
         _validator = Substitute.For<IValidator<UpdateProductCommand>>();
         _mapper = Substitute.For<IMapper>();
 

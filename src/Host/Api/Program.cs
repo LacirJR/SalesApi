@@ -3,9 +3,14 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Module.Carts.Infrastructure.Persistence.Seeders;
+using Module.Carts.Presentation.Extensions;
+using Module.Products.Infrastructure.Persistence.Seeders;
 using Module.Products.Presentation.Extensions;
+using Module.Sales.Presentation.Extensions;
 using Module.Users.Extensions;
 using Module.Users.Infrastructure.Persistence.Seeders;
+using Shared.Application.Extensions;
 using Shared.Infrastructure.Extensions;
 using Shared.Presentation.Middlewares;
 
@@ -79,10 +84,16 @@ builder.Services.AddAuthentication(options =>
     });
 builder.Services.AddAuthorization();
 
-builder.Services.AddSharedInfrastructure(builder.Configuration);
 
-builder.Services.AddUserModule(builder.Configuration)
-    .AddProductModule(builder.Configuration);
+builder.Services.AddSharedInfrastructure(builder.Configuration);
+builder.Services.AddSharedApplication(builder.Configuration);
+
+//Add modules
+builder.Services
+    .AddUserModule(builder.Configuration)
+    .AddProductModule(builder.Configuration)
+    .AddCartModule(builder.Configuration)
+    .AddSaleModule(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 var app = builder.Build();
@@ -96,11 +107,15 @@ if (app.Environment.IsDevelopment())
     using (var scope = app.Services.CreateScope())
     {
         var initialiserUserDbContextInitializer = scope.ServiceProvider.GetRequiredService<UserDbContextInitializer>();
+        var initialiserProductDbContextInitializer = scope.ServiceProvider.GetRequiredService<ProductDbContextInitializer>();
+        var initialiserCartDbContextInitializer = scope.ServiceProvider.GetRequiredService<CartDbContextInitializer>();
         await initialiserUserDbContextInitializer.SeedAsync();
+        await initialiserProductDbContextInitializer.SeedAsync();
+        await initialiserCartDbContextInitializer.SeedAsync();
     }
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.MapHealthChecks("/api/health");
 app.UseAuthentication();
 app.UseAuthorization();

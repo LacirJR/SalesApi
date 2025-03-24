@@ -5,20 +5,20 @@ namespace Shared.Infrastructure.Common;
 public class PaginatedList<T>
 {
     public IEnumerable<T> Data { get; }
-    public int PageNumber { get; }
+    public int CurrentPage { get; }
     public int TotalPages { get; }
-    public int TotalCount { get; }
+    public int TotalItems { get; }
 
-    public PaginatedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
+    public PaginatedList(IEnumerable<T> items, int count, int currentPage, int pageSize)
     {
-        PageNumber = pageNumber;
+        CurrentPage = currentPage;
         TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-        TotalCount = count;
+        TotalItems = count;
         Data = items;
     }
 
-    public bool HasPreviousPage => PageNumber > 1;
-    public bool HasNextPage => PageNumber < TotalPages;
+    public bool HasPreviousPage => CurrentPage > 1;
+    public bool HasNextPage => CurrentPage < TotalPages;
     public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
     {
         var count = await source.CountAsync();

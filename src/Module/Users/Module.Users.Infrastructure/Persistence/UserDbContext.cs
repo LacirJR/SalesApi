@@ -10,12 +10,9 @@ namespace Module.Users.Infrastructure.Persistence;
 
 public class UserDbContext : ModuleDbContext, IUserDbContext
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public UserDbContext(DbContextOptions<UserDbContext> options, IMediator mediator, ICurrentUserService currentUserService,
-        IHttpContextAccessor httpContextAccessor) : base(options, mediator, currentUserService, httpContextAccessor)
+    public UserDbContext(DbContextOptions<UserDbContext> options, IMediator mediator,
+        ICurrentUserService currentUserService) : base(options, mediator, currentUserService)
     {
-        _httpContextAccessor = httpContextAccessor;
     }
 
     protected override string Schema => "Users";

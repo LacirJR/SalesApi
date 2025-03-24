@@ -165,7 +165,7 @@ public class UserRepositoryTests
         var result = await _repository.GetAllAsync(null, "Username", 1, 10, CancellationToken.None);
 
         Assert.NotNull(result);
-        Assert.Equal(2, result.TotalCount);
+        Assert.Equal(2, result.TotalItems);
         Assert.Equal(2, result.Data.ToList().Count);
         Assert.Equal("user1@example.com", result.Data.ToList()[0].Email);
         Assert.Equal("user2@example.com", result.Data.ToList()[1].Email);
@@ -178,6 +178,6 @@ public class UserRepositoryTests
 
         Assert.NotNull(result);
         Assert.Empty(result.Data);
-        Assert.Equal(0, result.TotalCount);
+        Assert.Equal(0, result.TotalItems);
     }
 }
