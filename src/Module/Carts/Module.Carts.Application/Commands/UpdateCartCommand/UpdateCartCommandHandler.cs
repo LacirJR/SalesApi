@@ -15,12 +15,12 @@ public class UpdateCartCommandHandler : IRequestHandler<UpdateCartCommand, Servi
     private readonly ICartRepository _cartRepository;
     private readonly IDiscountRuleRepository _discountRuleRepository;
     private readonly ISharedProductService _sharedProductService;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICartUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IValidator<UpdateCartCommand> _validator;
 
     public UpdateCartCommandHandler(ICartRepository cartRepository, IDiscountRuleRepository discountRuleRepository,
-        ISharedProductService sharedProductService, IUnitOfWork unitOfWork, IMapper mapper,
+        ISharedProductService sharedProductService, ICartUnitOfWork unitOfWork, IMapper mapper,
         IValidator<UpdateCartCommand> validator)
     {
         _cartRepository = cartRepository;

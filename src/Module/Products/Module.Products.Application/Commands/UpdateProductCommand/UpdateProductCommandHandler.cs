@@ -13,12 +13,12 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 {
     private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<UpdateProductCommand> _validator;
     private readonly IMapper _mapper;
 
     public UpdateProductCommandHandler(IProductRepository productRepository, ICategoryRepository categoryRepository,
-        IUnitOfWork unitOfWork, IValidator<UpdateProductCommand> validator, IMapper mapper)
+        IProductUnitOfWork unitOfWork, IValidator<UpdateProductCommand> validator, IMapper mapper)
     {
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;

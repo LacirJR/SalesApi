@@ -18,7 +18,7 @@ public class DeleteCartCommandHandlerTests
 {
     private readonly Faker _faker;
     private readonly ICartRepository _cartRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICartUnitOfWork _unitOfWork;
     private readonly IValidator<DeleteCartCommand> _validator;
     private readonly DeleteCartCommandHandler _handler;
 
@@ -26,7 +26,7 @@ public class DeleteCartCommandHandlerTests
     {
         _faker = new Faker();
         _cartRepository = Substitute.For<ICartRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<ICartUnitOfWork>();
         _validator = Substitute.For<IValidator<DeleteCartCommand>>();
 
         _handler = new DeleteCartCommandHandler(_cartRepository, _unitOfWork, _validator);

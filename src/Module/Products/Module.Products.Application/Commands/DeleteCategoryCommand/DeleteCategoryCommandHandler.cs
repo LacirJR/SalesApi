@@ -12,12 +12,12 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IProductRepository _productRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<DeleteCategoryCommand> _validator;
     private readonly IMapper _mapper;
 
     public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository, IProductRepository productRepository,
-        IUnitOfWork unitOfWork, IValidator<DeleteCategoryCommand> validator, IMapper mapper)
+        IProductUnitOfWork unitOfWork, IValidator<DeleteCategoryCommand> validator, IMapper mapper)
     {
         _categoryRepository = categoryRepository;
         _productRepository = productRepository;

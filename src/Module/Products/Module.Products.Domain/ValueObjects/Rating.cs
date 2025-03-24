@@ -11,8 +11,8 @@ public class Rating
 
     public Rating(decimal rate, int count)
     {
-        if (rate < 0 || rate > 5) throw new ProductDomainException("A avaliação deve estar entre 0 e 5.");
-        if (count < 0) throw new ProductDomainException("O número de avaliações não pode ser negativo.");
+        if (rate < 0 || rate > 5) throw new ProductDomainException("The rating must be between 0 and 5.");
+        if (count < 0) throw new ProductDomainException("The number of ratings cannot be negative.");
         
         Rate = rate;
         Count = count;

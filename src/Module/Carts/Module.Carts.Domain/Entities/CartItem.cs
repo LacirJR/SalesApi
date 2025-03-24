@@ -11,10 +11,13 @@ public class CartItem : BaseEntity
     public decimal UnitPrice { get; private set; }
     public decimal DiscountPercentage { get; private set; }
     
+    public Cart Cart { get; set; }
+    
     private CartItem() { }
 
     public CartItem(Guid cartId, Guid productId, int quantity, decimal unitPrice)
     {
+        Id = Guid.NewGuid();
         CartId = cartId;
         ProductId = productId;
         Quantity = quantity;
@@ -40,6 +43,6 @@ public class CartItem : BaseEntity
     public decimal GetTotalPrice()
     {
         var discountAmount = (UnitPrice * (decimal)(DiscountPercentage / 100)) * Quantity;
-        return (UnitPrice * Quantity) - discountAmount;
+        return Math.Round((UnitPrice * Quantity) - discountAmount, 2, MidpointRounding.AwayFromZero);
     }
 }

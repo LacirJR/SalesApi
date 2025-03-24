@@ -94,6 +94,6 @@ public class CartRepositoryTests : IClassFixture<DbContextFixture>
         var result = await _repository.GetAllAsync(null, "Date desc", 1, 5, CancellationToken.None);
 
         Assert.Equal(5, result.Data.ToList().Count);
-        Assert.Equal(10, result.TotalCount);
+        Assert.Equal(10, result.TotalItems);
     }
 }

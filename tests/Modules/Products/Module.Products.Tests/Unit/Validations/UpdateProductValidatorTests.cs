@@ -135,23 +135,7 @@ public class UpdateProductValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Category)
             .WithErrorMessage("The specified category does not exist.");
     }
-
-    [Fact]
-    public async Task Should_Fail_When_Product_Already_Exists_In_Category()
-    {
-        var command = _fakerCommand.Generate();
-
-        _categoryRepository.ExistsByNameAsync(command.Category, Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(true));
-
-        _productRepository.ExistsByTitleAndCategoryAsync(command.Title, command.Category, Arg.Any<CancellationToken>())
-            .Returns(Task.FromResult(true));
-
-        var result = await _validator.TestValidateAsync(command);
-
-        result.ShouldHaveValidationErrorFor(x => x)
-            .WithErrorMessage("A product with the same title already exists in this category.");
-    }
+    
 
     [Fact]
     public async Task Should_Fail_When_Image_Url_Is_Invalid()

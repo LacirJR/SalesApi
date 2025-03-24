@@ -14,6 +14,10 @@ public static class ServiceCollectionExtension
 
         services.AddScoped<ISharedProductService, SharedProductService>();
         services.AddScoped<ISharedUserService, SharedUserService>();
+        services.AddScoped<ISharedCartService, SharedCartService>();
+        services.AddScoped<ISharedSaleService, SharedSaleService>();
+        
+       
         
         return services;
     }

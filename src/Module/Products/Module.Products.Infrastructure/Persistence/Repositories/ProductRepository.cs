@@ -62,7 +62,7 @@ public class ProductRepository : IProductRepository
     
     public async Task<Product?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.Products.FindAsync(id, cancellationToken);
+        return await _context.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     public async Task<PaginatedList<Product>> GetAllAsync(string? filter, string? orderBy, int page, int size,

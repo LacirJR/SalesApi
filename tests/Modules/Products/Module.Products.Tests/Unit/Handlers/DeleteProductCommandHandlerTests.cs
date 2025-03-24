@@ -2,6 +2,7 @@
 using Bogus;
 using FluentValidation;
 using FluentValidation.Results;
+using MassTransit;
 using Module.Products.Application.Commands.DeleteProductCommand;
 using Module.Products.Application.Dtos;
 using Module.Products.Application.Interfaces.Persistence;
@@ -20,20 +21,21 @@ namespace Module.Products.Tests.Unit.Handlers;
 public class DeleteProductCommandHandlerTests
 {
     private readonly IProductRepository _productRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<DeleteProductCommand> _validator;
     private readonly IMapper _mapper;
+    private readonly IPublishEndpoint _publishEndpoint;
     private readonly DeleteProductCommandHandler _handler;
     private readonly Faker _faker;
 
     public DeleteProductCommandHandlerTests()
     {
         _productRepository = Substitute.For<IProductRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<IProductUnitOfWork>();
         _validator = Substitute.For<IValidator<DeleteProductCommand>>();
         _mapper = Substitute.For<IMapper>();
-
-        _handler = new DeleteProductCommandHandler(_productRepository, _unitOfWork, _validator, _mapper);
+        _publishEndpoint =  Substitute.For<IPublishEndpoint>();
+        _handler = new DeleteProductCommandHandler(_productRepository, _unitOfWork, _validator, _mapper, _publishEndpoint);
         _faker = new Faker();
     }
     
@@ -75,16 +77,16 @@ public class DeleteProductCommandHandlerTests
     {
         var command = new DeleteProductCommand(Guid.Empty);
 
-        _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
+        _validator.ValidateAsync(command, default)
             .Returns(new ValidationResult(new[]
             {
                 new ValidationFailure("Id", "Product ID is required")
             }));
 
-        await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, default));
 
-        await _productRepository.DidNotReceive().RemoveByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
-        await _unitOfWork.DidNotReceive().CommitAsync(Arg.Any<CancellationToken>());
+        await _productRepository.DidNotReceive().RemoveByIdAsync(Arg.Any<Guid>(), default);
+        await _unitOfWork.DidNotReceive().CommitAsync(default);
     }
     
     [Fact]
@@ -93,10 +95,10 @@ public class DeleteProductCommandHandlerTests
         var productId = Guid.NewGuid();
         var command = new DeleteProductCommand(productId);
 
-        _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
+        _validator.ValidateAsync(command, default)
             .Returns(new ValidationResult());
 
-        _productRepository.RemoveByIdAsync(productId, Arg.Any<CancellationToken>())
+        _productRepository.RemoveByIdAsync(productId, default)
             .Returns(Task.FromResult<Product>(null));
 
         var result = await _handler.Handle(command, CancellationToken.None);

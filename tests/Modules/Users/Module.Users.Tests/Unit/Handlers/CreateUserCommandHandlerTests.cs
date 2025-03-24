@@ -17,7 +17,7 @@ namespace Module.Users.Tests.Unit.Handlers;
 public class CreateUserCommandHandlerTests
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserUnitOfWork _unitOfWork;
     private readonly IValidator<CreateUserCommand> _validator;
     private readonly IMapper _mapper;
     private readonly CreateUserCommandHandler _handler;
@@ -25,7 +25,7 @@ public class CreateUserCommandHandlerTests
     public CreateUserCommandHandlerTests()
     {
         _userRepository = Substitute.For<IUserRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<IUserUnitOfWork>();
         _validator = Substitute.For<IValidator<CreateUserCommand>>();
         var config = new MapperConfiguration(cfg => cfg.AddProfile<UserProfile>());
         _mapper = config.CreateMapper();

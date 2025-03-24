@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Module.Products.Application.Interfaces.Persistence;
 using Module.Products.Infrastructure.Persistence;
 using Module.Products.Infrastructure.Persistence.Repositories;
+using Module.Products.Infrastructure.Persistence.Seeders;
 using Shared.Application.Interfaces.Persistence;
 using Shared.Infrastructure.Extensions;
 using Shared.Infrastructure.Persistence;
@@ -16,7 +17,10 @@ public static class ServiceCollectionExtensions
 
         services
             .AddScoped<IProductDbContext>(provider => provider.GetService<ProductDbContext>())
-            .AddDatabaseContext<ProductDbContext>(config);
+            .AddDatabaseContext<ProductDbContext>(config)
+            .AddScoped<ProductDbContextInitializer>();
+        
+        services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
         
         services.AddScoped<IProductRepository, ProductRepository>();         
         services.AddScoped<ICategoryRepository, CategoryRepository>();         

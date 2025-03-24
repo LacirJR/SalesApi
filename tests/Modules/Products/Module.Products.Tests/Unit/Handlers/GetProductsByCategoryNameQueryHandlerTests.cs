@@ -47,7 +47,7 @@ public class GetProductsByCategoryNameQueryHandlerTests
         _categoryRepository.GetByNameAsync(categoryName, Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(category));
 
-        _productRepository.GetAllAsync($"categoryId={category.Id}", query.Order, query.Page, query.Size, Arg.Any<CancellationToken>())
+        _productRepository.GetAllAsync($"categoryId={category.Id}", query.Order, query.Page, query.Size, default)
             .Returns(Task.FromResult(paginatedProducts));
 
         var productsDto = new List<ProductResponseDto>

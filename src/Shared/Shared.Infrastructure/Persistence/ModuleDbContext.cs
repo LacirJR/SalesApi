@@ -12,15 +12,12 @@ public abstract class ModuleDbContext : DbContext
 {
     private readonly IMediator _mediator;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-    protected ModuleDbContext(DbContextOptions options, IMediator mediator, ICurrentUserService currentUserService,
-        IHttpContextAccessor httpContextAccessor) : base(options)
+    protected ModuleDbContext(DbContextOptions options, IMediator mediator, ICurrentUserService currentUserService) : base(options)
     {
         _mediator = mediator;
         _currentUserService = currentUserService;
-        _httpContextAccessor = httpContextAccessor;
     }
 
     protected abstract string Schema { get; }

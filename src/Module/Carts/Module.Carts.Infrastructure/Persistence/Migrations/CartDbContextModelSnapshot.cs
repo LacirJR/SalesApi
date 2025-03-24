@@ -42,6 +42,9 @@ namespace Module.Carts.Infrastructure.Persistence.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -50,8 +53,7 @@ namespace Module.Carts.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Carts", "Carts");
                 });
@@ -144,11 +146,13 @@ namespace Module.Carts.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Module.Carts.Domain.Entities.CartItem", b =>
                 {
-                    b.HasOne("Module.Carts.Domain.Entities.Cart", null)
+                    b.HasOne("Module.Carts.Domain.Entities.Cart", "Cart")
                         .WithMany("Products")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Module.Carts.Domain.Entities.Cart", b =>

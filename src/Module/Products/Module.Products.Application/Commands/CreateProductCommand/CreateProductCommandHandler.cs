@@ -14,11 +14,11 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 {
     private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<CreateProductCommand> _validator;
     private readonly IMapper _mapper;
 
-    public CreateProductCommandHandler(IProductRepository productRepository, ICategoryRepository categoryRepository,  IUnitOfWork unitOfWork, IValidator<CreateProductCommand> validator, IMapper mapper)
+    public CreateProductCommandHandler(IProductRepository productRepository, ICategoryRepository categoryRepository,  IProductUnitOfWork unitOfWork, IValidator<CreateProductCommand> validator, IMapper mapper)
     {
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;

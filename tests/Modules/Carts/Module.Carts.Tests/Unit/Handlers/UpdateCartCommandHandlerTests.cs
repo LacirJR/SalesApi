@@ -23,7 +23,7 @@ public class UpdateCartCommandHandlerTests
     private readonly ICartRepository _cartRepository;
     private readonly IDiscountRuleRepository _discountRuleRepository;
     private readonly ISharedProductService _sharedProductService;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICartUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IValidator<UpdateCartCommand> _validator;
     private readonly UpdateCartCommandHandler _handler;
@@ -34,7 +34,7 @@ public class UpdateCartCommandHandlerTests
         _cartRepository = Substitute.For<ICartRepository>();
         _discountRuleRepository = Substitute.For<IDiscountRuleRepository>();
         _sharedProductService = Substitute.For<ISharedProductService>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<ICartUnitOfWork>();
         _mapper = Substitute.For<IMapper>();
         _validator = Substitute.For<IValidator<UpdateCartCommand>>();
 

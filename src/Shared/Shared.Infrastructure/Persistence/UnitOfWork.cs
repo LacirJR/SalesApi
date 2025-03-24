@@ -3,7 +3,7 @@ using Shared.Application.Interfaces.Persistence;
 
 namespace Shared.Infrastructure.Persistence;
 
-public sealed class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
+public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
 {
     private readonly TContext _context;
 

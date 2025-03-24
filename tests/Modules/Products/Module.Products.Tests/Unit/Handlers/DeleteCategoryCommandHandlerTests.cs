@@ -19,7 +19,7 @@ public class DeleteCategoryCommandHandlerTests
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IProductRepository _productRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<DeleteCategoryCommand> _validator;
     private readonly IMapper _mapper;
     private readonly DeleteCategoryCommandHandler _handler;
@@ -29,7 +29,7 @@ public class DeleteCategoryCommandHandlerTests
     {
         _categoryRepository = Substitute.For<ICategoryRepository>();
         _productRepository = Substitute.For<IProductRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<IProductUnitOfWork>();
         _validator = Substitute.For<IValidator<DeleteCategoryCommand>>();
         _mapper = Substitute.For<IMapper>();
 
@@ -90,10 +90,10 @@ public class DeleteCategoryCommandHandlerTests
     {
         var command = new DeleteCategoryCommand("NonExistentCategory");
 
-        _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
+        _validator.ValidateAsync(command, default)
             .Returns(new ValidationResult());
 
-        _categoryRepository.GetByNameAsync(command.CategoryName, Arg.Any<CancellationToken>())
+        _categoryRepository.GetByNameAsync(command.CategoryName, default)
             .Returns(Task.FromResult<Category>(null));
 
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -102,8 +102,8 @@ public class DeleteCategoryCommandHandlerTests
         Assert.Equal("NotFound", result.Error.Type);
         Assert.Equal("Category not found.", result.Error.Detail);
 
-        await _categoryRepository.DidNotReceive().RemoveByNameAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
-        await _unitOfWork.DidNotReceive().CommitAsync(Arg.Any<CancellationToken>());
+        await _categoryRepository.DidNotReceive().RemoveByNameAsync(Arg.Any<string>(), default);
+        await _unitOfWork.DidNotReceive().CommitAsync(default);
     }
     
     [Fact]

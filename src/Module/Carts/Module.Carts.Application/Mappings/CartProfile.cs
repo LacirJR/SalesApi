@@ -9,7 +9,7 @@ public class CartProfile : Profile
     public CartProfile()
     {
         CreateMap<Cart, CartResponseDto>()
-            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Products.Sum(i => i.GetTotalPrice())));
+            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => Math.Round(src.Products.Sum(i => i.GetTotalPrice()), 2, MidpointRounding.AwayFromZero)));
 
         CreateMap<CartItem, CartItemDto>();
         
