@@ -43,6 +43,6 @@ public class CartItem : BaseEntity
     public decimal GetTotalPrice()
     {
         var discountAmount = (UnitPrice * (decimal)(DiscountPercentage / 100)) * Quantity;
-        return (UnitPrice * Quantity) - discountAmount;
+        return Math.Round((UnitPrice * Quantity) - discountAmount, 2, MidpointRounding.AwayFromZero);
     }
 }

@@ -9,7 +9,7 @@ public sealed class SaleItem :BaseEntity
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
     public decimal DiscountPercentage { get; private set; }
-    public decimal Total => UnitPrice * Quantity * (1 - DiscountPercentage / 100);
+    public decimal Total => Math.Round(UnitPrice * Quantity * (1 - DiscountPercentage / 100), 2,  MidpointRounding.AwayFromZero);
     
     public Sale Sale { get; private set; }
     

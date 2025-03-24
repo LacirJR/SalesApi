@@ -34,8 +34,8 @@ public class UpdateSaleCommandHandler : IRequestHandler<UpdateSaleCommand, Servi
         if (sale is null)
             return ServiceResult.Failed<SaleResponseDto>(ServiceError.NotFound);
 
-        if (sale.IsCanceled)
-            return ServiceResult.Failed<SaleResponseDto>(ServiceError.GenericError("Validation", "Update Forbidden", "Cannot update a canceled sale."));
+        if (sale.IsCanceled || sale.IsFinalized)
+            return ServiceResult.Failed<SaleResponseDto>(ServiceError.GenericError("Validation", "Update Forbidden", "Cannot update a canceled or finalized sale."));
 
         sale.UpdateBranchAndDate(request.Branch, request.Date);
 

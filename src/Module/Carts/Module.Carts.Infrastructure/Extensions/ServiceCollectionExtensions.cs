@@ -29,6 +29,7 @@ public static class ServiceCollectionExtensions
 
         
         MassTransitConfiguratorBus.MassTransitConfigurator.AddConsumer<ProductDeletedCartConsumer>();
+        MassTransitConfiguratorBus.MassTransitConfigurator.AddConsumer<FinalizedCartConsumer>();
         
         return services;
     }
