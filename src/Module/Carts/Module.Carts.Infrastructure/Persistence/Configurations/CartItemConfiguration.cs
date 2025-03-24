@@ -20,5 +20,10 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
         builder.Property(b => b.Quantity).IsRequired().HasDefaultValue(1);
         builder.Property(b => b.DiscountPercentage).HasPrecision(5, 2).HasDefaultValue(0);
         builder.Property(b => b.UnitPrice).HasPrecision(18, 2) .IsRequired();
+        
+        builder.HasOne(ci => ci.Cart)
+            .WithMany(c => c.Products)
+            .HasForeignKey(ci => ci.CartId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

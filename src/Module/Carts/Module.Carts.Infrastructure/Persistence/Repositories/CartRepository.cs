@@ -3,6 +3,7 @@ using Gridify.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Module.Carts.Application.Interfaces.Persistence;
 using Module.Carts.Domain.Entities;
+using Module.Carts.Domain.Enums;
 using Shared.Infrastructure.Common;
 
 namespace Module.Carts.Infrastructure.Persistence.Repositories;
@@ -27,7 +28,7 @@ public class CartRepository : ICartRepository
     {
         return await _context.Carts
             .Include(c => c.Products)
-            .FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
+            .FirstOrDefaultAsync(c => c.UserId == userId && c.Status == CartStatus.Active, cancellationToken);
     }
 
     public async Task<PaginatedList<Cart>> GetAllAsync(string? filter, string? orderBy, int page, int size, CancellationToken cancellationToken)

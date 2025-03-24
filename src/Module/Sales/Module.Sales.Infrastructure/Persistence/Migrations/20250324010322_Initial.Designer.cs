@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Module.Carts.Infrastructure.Persistence;
+using Module.Sales.Infrastructure.Persistence;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Module.Carts.Infrastructure.Persistence.Migrations
+namespace Module.Sales.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(CartDbContext))]
-    [Migration("20250321233334_Initial")]
+    [DbContext(typeof(SaleDbContext))]
+    [Migration("20250324010322_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,17 +20,25 @@ namespace Module.Carts.Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Carts")
+                .HasDefaultSchema("Sales")
                 .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Module.Carts.Domain.Entities.Cart", b =>
+            modelBuilder.Entity("Module.Sales.Domain.Entities.Sale", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Branch")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid>("CartId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAtUtc")
@@ -45,6 +53,15 @@ namespace Module.Carts.Infrastructure.Persistence.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
 
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Number"));
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -53,70 +70,17 @@ namespace Module.Carts.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
+                    b.HasIndex("Number")
                         .IsUnique();
 
-                    b.ToTable("Carts", "Carts");
+                    b.ToTable("Sales", "Sales");
                 });
 
-            modelBuilder.Entity("Module.Carts.Domain.Entities.CartItem", b =>
+            modelBuilder.Entity("Module.Sales.Domain.Entities.SaleItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<Guid>("CartId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("DiscountPercentage")
-                        .ValueGeneratedOnAdd()
-                        .HasPrecision(5, 2)
-                        .HasColumnType("numeric(5,2)")
-                        .HasDefaultValue(0m);
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1);
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
-
-                    b.Property<DateTime?>("UpdatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartItems", "Carts");
-                });
-
-            modelBuilder.Entity("Module.Carts.Domain.Entities.DiscountRule", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
@@ -128,35 +92,46 @@ namespace Module.Carts.Infrastructure.Persistence.Migrations
                         .HasPrecision(5, 2)
                         .HasColumnType("numeric(5,2)");
 
-                    b.Property<int>("MaxQuantity")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MinQuantity")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("SaleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<DateTime?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscountRules", "Carts");
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("SaleItems", "Sales");
                 });
 
-            modelBuilder.Entity("Module.Carts.Domain.Entities.CartItem", b =>
+            modelBuilder.Entity("Module.Sales.Domain.Entities.SaleItem", b =>
                 {
-                    b.HasOne("Module.Carts.Domain.Entities.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartId")
+                    b.HasOne("Module.Sales.Domain.Entities.Sale", "Sale")
+                        .WithMany("Items")
+                        .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Sale");
                 });
 
-            modelBuilder.Entity("Module.Carts.Domain.Entities.Cart", b =>
+            modelBuilder.Entity("Module.Sales.Domain.Entities.Sale", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

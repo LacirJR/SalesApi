@@ -19,7 +19,7 @@ public class CreateProductCommandHandlerTests
 {
     private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductUnitOfWork _unitOfWork;
     private readonly IValidator<CreateProductCommand> _validator;
     private readonly IMapper _mapper;
     private readonly CreateProductCommandHandler _handler;
@@ -29,7 +29,7 @@ public class CreateProductCommandHandlerTests
     {
         _productRepository = Substitute.For<IProductRepository>();
         _categoryRepository = Substitute.For<ICategoryRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<IProductUnitOfWork>();
         _validator = Substitute.For<IValidator<CreateProductCommand>>();
         _mapper = Substitute.For<IMapper>();
 
@@ -50,10 +50,10 @@ public class CreateProductCommandHandlerTests
             new RatingDto(4.5m, 10)
         );
 
-        _validator.ValidateAsync(command, Arg.Any<CancellationToken>())
+        _validator.ValidateAsync(command, default)
             .Returns(new ValidationResult());
 
-        _categoryRepository.GetByNameAsync(command.Category, Arg.Any<CancellationToken>())
+        _categoryRepository.GetByNameAsync(command.Category, default)
             .Returns(Task.FromResult(category));
 
         _mapper.Map<ProductResponseDto>(Arg.Any<Product>())
@@ -64,8 +64,8 @@ public class CreateProductCommandHandlerTests
         Assert.True(result.Succeeded);
         Assert.Equal(command.Title, result.Data.Title);
 
-        await _productRepository.Received(1).AddAsync(Arg.Any<Product>(), Arg.Any<CancellationToken>());
-        await _unitOfWork.Received(1).CommitAsync(Arg.Any<CancellationToken>());
+        await _productRepository.Received(1).AddAsync(Arg.Any<Product>(), default);
+        await _unitOfWork.Received(1).CommitAsync(default);
     }
     
     [Fact]

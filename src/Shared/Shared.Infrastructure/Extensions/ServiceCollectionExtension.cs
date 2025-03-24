@@ -17,7 +17,7 @@ public static class ServiceCollectionExtension
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-        
+        services.AddMassTransitWithRabbitMq(configuration);
         return services;
     }
     

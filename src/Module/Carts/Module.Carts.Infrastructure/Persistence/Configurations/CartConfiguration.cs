@@ -12,13 +12,13 @@ public class CartConfiguration :  IEntityTypeConfiguration<Cart>
         
         builder.HasKey(x => x.Id);
         
-        builder.HasIndex(c => c.UserId).IsUnique();
+        builder.HasIndex(c => c.UserId);
         
         builder.Property(x => x.UserId).IsRequired();
         builder.Property(x => x.Date).IsRequired();
         
         builder.HasMany(c => c.Products)
-            .WithOne()
+            .WithOne(x => x.Cart)
             .HasForeignKey(ci => ci.CartId)
             .OnDelete(DeleteBehavior.Cascade); 
 

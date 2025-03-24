@@ -10,10 +10,10 @@ namespace Module.Carts.Application.Commands.DeleteCartCommand;
 public class DeleteCartCommandHandler :  IRequestHandler<DeleteCartCommand, ServiceResult<DeleteCartDto>>
 {
     private readonly ICartRepository _cartRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICartUnitOfWork _unitOfWork;
     private readonly IValidator<DeleteCartCommand> _validator;
 
-    public DeleteCartCommandHandler(ICartRepository cartRepository, IUnitOfWork unitOfWork, IValidator<DeleteCartCommand> validator)
+    public DeleteCartCommandHandler(ICartRepository cartRepository, ICartUnitOfWork unitOfWork, IValidator<DeleteCartCommand> validator)
     {
         _cartRepository = cartRepository;
         _unitOfWork = unitOfWork;

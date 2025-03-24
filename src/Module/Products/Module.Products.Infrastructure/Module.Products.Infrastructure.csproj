@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Bogus" Version="35.6.2" />
       <PackageReference Include="Gridify" Version="2.16.2" />
       <PackageReference Include="Gridify.EntityFramework" Version="2.16.2" />
     </ItemGroup>

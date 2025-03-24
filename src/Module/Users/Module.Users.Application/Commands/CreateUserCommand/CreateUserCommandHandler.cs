@@ -16,11 +16,11 @@ namespace Module.Users.Application.Commands.CreateUserCommand;
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ServiceResult<UserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserUnitOfWork _unitOfWork;
     private readonly IValidator<CreateUserCommand> _validator;
     private readonly IMapper _mapper;
 
-    public CreateUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork,
+    public CreateUserCommandHandler(IUserRepository userRepository, IUserUnitOfWork unitOfWork,
         IValidator<CreateUserCommand> validator, IMapper mapper)
     {
         _userRepository = userRepository;

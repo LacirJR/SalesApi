@@ -33,7 +33,7 @@ public class CartController : ControllerBase
     [ProducesResponseType(typeof(ServiceError), 400)]
     [ProducesResponseType(typeof(ServiceError), 500)]
     [HttpGet]
-    public async Task<IActionResult> GetAll(string filter, string order, int page = 1, int size = 10)
+    public async Task<IActionResult> GetAll(string? filter, string? order, int page = 1, int size = 10)
     {
         var response = await _sender.Send(new GetAllCartsQuery(filter, order, page, size));
                

@@ -11,11 +11,11 @@ namespace Module.Users.Application.Commands.DeleteUserCommand;
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ServiceResult<UserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserUnitOfWork _unitOfWork;
     private readonly IValidator<DeleteUserCommand> _validator;
     private readonly IMapper _mapper;
 
-    public DeleteUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IValidator<DeleteUserCommand> validator, IMapper mapper)
+    public DeleteUserCommandHandler(IUserRepository userRepository, IUserUnitOfWork unitOfWork, IValidator<DeleteUserCommand> validator, IMapper mapper)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;

@@ -154,17 +154,20 @@ public class ProductRepositoryTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task Should_Get_Product_By_Id()
     {
+        var category = new Category(_faker.Commerce.Categories(1)[0]);
+        
         var product = new Product(
             "Test Product",
             500,
             "Test Description",
-            Guid.NewGuid(),
+            category.Id,
             "test.jpg",
             new Rating(4.8m, 100)
         );
 
+        await _dbContext.Categories.AddAsync(category);
         await _dbContext.Products.AddAsync(product);
-        await _dbContext.SaveChangesAsync(Arg.Any<CancellationToken>());
+        await _dbContext.SaveChangesAsync(default);
 
         var result = await _repository.GetByIdAsync(product.Id, CancellationToken.None);
         Assert.NotNull(result);
@@ -204,7 +207,7 @@ public class ProductRepositoryTests : IClassFixture<DbContextFixture>
 
         Assert.NotNull(result);
         Assert.Equal(10, result.Data.ToList().Count);
-        Assert.Equal(15, result.TotalCount);
+        Assert.Equal(15, result.TotalItems);
     }
     
 }

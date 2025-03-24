@@ -52,7 +52,7 @@ public class CreateCategoryValidatorTests
         var existingCategory = new Category(_faker.Commerce.Categories(1)[0]);
         var command = new CreateCategoryCommand(existingCategory.Name);
 
-        _categoryRepository.GetByNameAsync(existingCategory.Name, Arg.Any<CancellationToken>())
+        _categoryRepository.GetByNameAsync(existingCategory.Name, default)
             .Returns(Task.FromResult(existingCategory));
 
         var result = await _validator.TestValidateAsync(command);

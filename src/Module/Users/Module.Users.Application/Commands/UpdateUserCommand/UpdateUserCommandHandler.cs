@@ -14,11 +14,11 @@ namespace Module.Users.Application.Commands.UpdateUserCommand;
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, ServiceResult<UserResponseDto>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserUnitOfWork _unitOfWork;
     private readonly IValidator<UpdateUserCommand> _validator;
     private readonly IMapper _mapper;
 
-    public UpdateUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork,
+    public UpdateUserCommandHandler(IUserRepository userRepository, IUserUnitOfWork unitOfWork,
         IValidator<UpdateUserCommand> validator, IMapper mapper)
     {
         _userRepository = userRepository;

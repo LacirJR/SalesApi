@@ -22,7 +22,7 @@ public class CreateCartCommandHandlerTests
 {
     private readonly Faker _faker;
     private readonly ICartRepository _cartRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICartUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateCartCommand> _validator;
     private readonly IDiscountRuleRepository _discountRuleRepository;
@@ -33,7 +33,7 @@ public class CreateCartCommandHandlerTests
     {
         _faker = new Faker();
         _cartRepository = Substitute.For<ICartRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<ICartUnitOfWork>();
         _mapper = Substitute.For<IMapper>();
         _validator = Substitute.For<IValidator<CreateCartCommand>>();
         _discountRuleRepository = Substitute.For<IDiscountRuleRepository>();

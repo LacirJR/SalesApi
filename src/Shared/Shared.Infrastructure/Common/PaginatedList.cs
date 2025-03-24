@@ -6,19 +6,19 @@ public class PaginatedList<T>
 {
     public IEnumerable<T> Data { get; }
     public int CurrentPage { get; }
+    public int TotalPages { get; }
     public int TotalItems { get; }
-    public int TotalCount { get; }
 
     public PaginatedList(IEnumerable<T> items, int count, int currentPage, int pageSize)
     {
         CurrentPage = currentPage;
-        TotalItems = (int)Math.Ceiling(count / (double)pageSize);
-        TotalCount = count;
+        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+        TotalItems = count;
         Data = items;
     }
 
     public bool HasPreviousPage => CurrentPage > 1;
-    public bool HasNextPage => CurrentPage < TotalItems;
+    public bool HasNextPage => CurrentPage < TotalPages;
     public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
     {
         var count = await source.CountAsync();

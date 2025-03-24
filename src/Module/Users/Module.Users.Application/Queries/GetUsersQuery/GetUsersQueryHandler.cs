@@ -27,7 +27,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, ServiceResult
 
         var usersDto = _mapper.Map<List<UserResponseDto>>(usersPaginated.Data);
 
-        return ServiceResult.Success(new PaginatedList<UserResponseDto>(usersDto, usersPaginated.TotalCount,
+        return ServiceResult.Success(new PaginatedList<UserResponseDto>(usersDto, usersPaginated.TotalItems,
             request.Page, request.Size));
     }
 }

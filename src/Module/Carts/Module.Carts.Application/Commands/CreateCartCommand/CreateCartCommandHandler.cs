@@ -15,11 +15,11 @@ public class CreateCartCommandHandler :  IRequestHandler<CreateCartCommand, Serv
     private readonly ICartRepository _cartRepository;
     private readonly IDiscountRuleRepository _discountRuleRepository;
     private readonly ISharedProductService _sharedProductService;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICartUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IValidator<CreateCartCommand> _validator;
 
-    public CreateCartCommandHandler(ICartRepository cartRepository, IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateCartCommand> validator, IDiscountRuleRepository discountRuleRepository, ISharedProductService sharedProductService)
+    public CreateCartCommandHandler(ICartRepository cartRepository, ICartUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateCartCommand> validator, IDiscountRuleRepository discountRuleRepository, ISharedProductService sharedProductService)
     {
         _cartRepository = cartRepository;
         _unitOfWork = unitOfWork;
@@ -60,7 +60,7 @@ public class CreateCartCommandHandler :  IRequestHandler<CreateCartCommand, Serv
         await _cartRepository.AddAsync(newCart, cancellationToken);
         await _unitOfWork.CommitAsync(cancellationToken);
         
-        return ServiceResult.Success(_mapper.Map<CartResponseDto>(existingCart));
+        return ServiceResult.Success(_mapper.Map<CartResponseDto>(newCart));
         
     }
 }

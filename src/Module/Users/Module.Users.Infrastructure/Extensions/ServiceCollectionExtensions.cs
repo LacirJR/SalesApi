@@ -23,7 +23,7 @@ public static class ServiceCollectionExtensions
             .AddDatabaseContext<UserDbContext>(config)
             .AddScoped<UserDbContextInitializer>();
         
-        services.AddScoped<IUnitOfWork, UnitOfWork<UserDbContext>>();
+        services.AddScoped<IUserUnitOfWork, UserUnitOfWork>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ISharedUserRepository, SharedUserRepository>();

@@ -25,7 +25,7 @@ public class GetAllCartsQueryHandler : IRequestHandler<GetAllCartsQuery, Service
             request.Size, cancellationToken);
         var cartsDto = _mapper.Map<List<CartResponseDto>>(cartsPaginated.Data);
 
-        return ServiceResult.Success(new PaginatedList<CartResponseDto>(cartsDto, cartsPaginated.TotalCount,
+        return ServiceResult.Success(new PaginatedList<CartResponseDto>(cartsDto, cartsPaginated.TotalItems,
             request.Page, request.Size));
     }
 }

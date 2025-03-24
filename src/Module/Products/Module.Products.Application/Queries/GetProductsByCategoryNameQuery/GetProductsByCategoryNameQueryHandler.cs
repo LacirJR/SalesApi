@@ -36,7 +36,7 @@ public class GetProductsByCategoryNameQueryHandler : IRequestHandler<GetProducts
         
         var productsDto = _mapper.Map<List<ProductResponseDto>>(productsPaginated.Data);
 
-        return ServiceResult.Success(new PaginatedList<ProductResponseDto>(productsDto, productsPaginated.TotalCount,
+        return ServiceResult.Success(new PaginatedList<ProductResponseDto>(productsDto, productsPaginated.TotalItems,
             request.Page, request.Size));
     }
 }

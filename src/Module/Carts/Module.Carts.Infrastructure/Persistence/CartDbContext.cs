@@ -10,17 +10,13 @@ namespace Module.Carts.Infrastructure.Persistence;
 
 public class CartDbContext : ModuleDbContext, ICartDbContext
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public CartDbContext(DbContextOptions options, IMediator mediator, ICurrentUserService currentUserService,
-        IHttpContextAccessor httpContextAccessor) : base(options, mediator, currentUserService, httpContextAccessor)
+    public CartDbContext(DbContextOptions<CartDbContext> options, IMediator mediator, ICurrentUserService currentUserService,
+        IHttpContextAccessor httpContextAccessor) : base(options, mediator, currentUserService)
     {
-        _httpContextAccessor = httpContextAccessor;
     }
 
     protected override string Schema => "Carts";
-
-
+    
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<DiscountRule> DiscountRules { get; set; }

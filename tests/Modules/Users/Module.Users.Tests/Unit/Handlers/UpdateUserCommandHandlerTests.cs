@@ -18,7 +18,7 @@ namespace Module.Users.Tests.Unit.Handlers;
 public class UpdateUserCommandHandlerTests
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserUnitOfWork _unitOfWork;
     private readonly IValidator<UpdateUserCommand> _validator;
     private readonly IMapper _mapper;
     private readonly UpdateUserCommandHandler _handler;
@@ -26,7 +26,7 @@ public class UpdateUserCommandHandlerTests
     public UpdateUserCommandHandlerTests()
     {
         _userRepository = Substitute.For<IUserRepository>();
-        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _unitOfWork = Substitute.For<IUserUnitOfWork>();
         _validator = Substitute.For<IValidator<UpdateUserCommand>>();
         var config = new MapperConfiguration(cfg => cfg.AddProfile<UserProfile>());
         _mapper = config.CreateMapper();
@@ -36,7 +36,6 @@ public class UpdateUserCommandHandlerTests
     [Fact]
     public async Task Handle_Should_Throw_ValidationException_When_Request_Is_Invalid()
     {
-        // Arrange
         var command = new UpdateUserCommand(
             Guid.Parse("e1a3bfaf-4301-47d0-8886-c56adde7ab05"), "invalid-email", "testuser", "weakpassword",
             new NameDto("Test", "User"),
@@ -108,7 +107,6 @@ public class UpdateUserCommandHandlerTests
     [Fact]
     public async Task Handle_Should_Return_Failed_When_Status_Is_Invalid()
     {
-        // Arrange
         var command = new UpdateUserCommand( Guid.Parse("e1a3bfaf-4301-47d0-8886-c56adde7ab05"),
             "test@example.com", "testuser", "securePassword",
             new NameDto("Test", "User"),

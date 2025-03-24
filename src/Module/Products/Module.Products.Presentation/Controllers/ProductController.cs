@@ -138,7 +138,7 @@ public class ProductController : ControllerBase
     [ProducesResponseType(typeof(ServiceError), 400)]
     [ProducesResponseType(typeof(ServiceError), 500)]
     [HttpGet("category/{category}")]
-    public async Task<IActionResult> GetProductsByCategory(string category, string order, int page = 1, int size = 10)
+    public async Task<IActionResult> GetProductsByCategory(string category, string? order, int page = 1, int size = 10)
     {
         var response = await _sender.Send(new GetProductsByCategoryNameQuery(category, order, page, size));
         

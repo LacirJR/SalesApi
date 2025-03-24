@@ -43,7 +43,7 @@ public class GetUsersQueryHandlerTests
         Assert.True(result.Succeeded);
         Assert.NotNull(result.Data);
         Assert.Empty(result.Data.Data);
-        Assert.Equal(0, result.Data.TotalCount);
+        Assert.Equal(0, result.Data.TotalItems);
     }
     
     [Fact]
@@ -77,7 +77,7 @@ public class GetUsersQueryHandlerTests
 
         Assert.True(result.Succeeded);
         Assert.NotNull(result.Data);
-        Assert.Equal(2, result.Data.TotalCount);
+        Assert.Equal(2, result.Data.TotalItems);
         Assert.Equal(2, result.Data.Data.ToList().Count);
         Assert.Equal("user1@example.com", result.Data.Data.ToList()[0].Email);
         Assert.Equal("user2@example.com", result.Data.Data.ToList()[1].Email);
